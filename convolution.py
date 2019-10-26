@@ -9,9 +9,22 @@ def convolution(dimension, stride, pixels):
     c1 = 0
     r2 = dimension
     c2= dimension
-    patch = pixels[0,c1:c2,r1:r2]
-    dot = np.dot(patch, filter)     #can replace this with a manual implementation later
-    print(dot)
+                                    # eventually you will want to get rid of this - convolution 
+    for i in range(len(pixels)):    # should only be on ONE channel to create ONE feature map
+        r1 = 0
+        c1 = 0
+        r2 = dimension
+        c2= dimension
+
+        while c2<=len(pixels[0]):
+            patch = pixels[i,c1:c2,r1:r2]
+            dot = np.dot(patch, filter)     
+            print(dot)
+            c1+=stride
+            c2+=stride
+
+
+    print(len(pixels[0]))
     # print(filter.shape==patch.shape)
 
 #you need first the # of channels, iterate over that    
