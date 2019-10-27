@@ -1,6 +1,6 @@
 import numpy as np
 
-def convolution(dimension, stride, pixels):
+def convolution(dimension, stride, pixels, padding):
     #output feature maps
     feature_map=[]
 
@@ -13,6 +13,11 @@ def convolution(dimension, stride, pixels):
     c1 = 0
     r2 = dimension
     c2= dimension
+
+    #add padding
+    if padding:
+        pixels = add_padding(pixels)
+        # print("Shape after padding: " + str(pixels.shape))
 
     #loop over the tensor and convolve
     while c2<=len(pixels):
@@ -35,6 +40,16 @@ def convolution(dimension, stride, pixels):
     return feature_map
     
 
+# Zero PADDING
+def add_padding(pixels):
+    # print("Shape before padding: " + str(pixels.shape))
+    pixels = np.insert(pixels,0,0,axis=0)               #along the top row
+    pixels = np.insert(pixels,0,0,axis=1)               #in the first column
+    pixels = np.insert(pixels,len(pixels),0,axis=0)     #along the bottom row
+    pixels = np.insert(pixels,len(pixels[0]),0,axis=1)  #in the last column
+    return pixels
+   
+
 #Convolutional Layer
     #NEXT STEP --> output the image
                     # Need to change VENV to work with Python3    
@@ -42,8 +57,6 @@ def convolution(dimension, stride, pixels):
     
 # Max POOLING
     #What determines the size of the pooling area? Is it that size of the convolution?
-
-# Zero PADDING   
 
 # the slicing tells it which list to go into, so [k,j,i] would be the 
 # would be in the kth set [[]], in the jth brack [] of k, number i inside j 

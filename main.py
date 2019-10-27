@@ -20,9 +20,19 @@ while True:
     if stride>=0 and stride<=5:
         break
 
+#get configurations from the user - zero padding
+padding = ""
+while True:
+    print("Do you want zero-padding? \nEnter 'yes' or 'no'.")
+    padding = input()
+    if padding=="yes" or padding=="no":
+        break
+
+pad = True if padding=='yes' else False
+
 #import the image - must be PNG - loads pixels in 0-1 scale (pixel value divided by 255)
 img = imread("../ImageStitch/cropped/left.png")
-im =  np.array([[[1,2,3,4],[5,6,7,8],[9,8,7,6]],[[0,0,0,0],[1,1,1,1],[2,2,2,2]]])
+# im =  np.array([[[1,2,3,4],[5,6,7,8],[9,8,7,6]],[[0,0,0,0],[1,1,1,1],[2,2,2,2]]])
 
 #reshape the array to make it easier to convolve over
 tensor = np.reshape(img, (len(img[0][0]),len(img[0]),len(img)))
@@ -32,7 +42,7 @@ features = []
 
 # first convolution
 for i in range(len(tensor)):
-    features.append(convolution(dimension,stride,tensor[i]))
+    features.append(convolution(dimension,stride,tensor[i],pad))
 
 features = np.asarray(features)
 print(features.shape)
