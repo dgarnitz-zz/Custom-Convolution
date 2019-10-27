@@ -32,7 +32,7 @@ pad = True if padding=='yes' else False
 
 #import the image - must be PNG - loads pixels in 0-1 scale (pixel value divided by 255)
 img = imread("../ImageStitch/cropped/left.png")
-# im =  np.array([[[1,2,3,4],[5,6,7,8],[9,8,7,6]],[[0,0,0,0],[1,1,1,1],[2,2,2,2]]])
+# img =  np.array([[[1,2,3,4],[5,6,7,8],[9,8,7,6]],[[0,0,0,0],[-1,-1,-1,-1],[-2,-2,-2,-2]]])
 
 #reshape the array to make it easier to convolve over
 tensor = np.reshape(img, (len(img[0][0]),len(img[0]),len(img)))
@@ -50,9 +50,9 @@ print(features.shape)
 #store the output of the pooling
 pooled_features = []
 
-# Max Pooling
+# Max Pooling - default size of 2x2 with horizontal and vertical stride of 2
 for i in range(len(features)):
-    pooled_features.append(max_pool(features[i],dimension))
+    pooled_features.append(max_pool(features[i],dimension=2,stride=2))
 
 pooled_features = np.asarray(pooled_features)
 print(pooled_features.shape)

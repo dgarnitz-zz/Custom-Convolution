@@ -1,6 +1,6 @@
 import numpy as np
 
-def max_pool(features, dimension):
+def max_pool(features, dimension, stride):
     #output feature maps
     feature_map=[]
 
@@ -20,18 +20,18 @@ def max_pool(features, dimension):
             patch = features[c1:c2,r1:r2]
             pooled_value = pool(patch)
             row.append(pooled_value)
-            r1+=dimension
-            r2+=dimension
+            r1+=stride
+            r2+=stride
 
         feature_map.append(row)
-        c1+=dimension
-        c2+=dimension
+        c1+=stride
+        c2+=stride
 
     return feature_map
 
 def pool(patch):
     max = -1
-    for val in patch.flatten():
+    for val in patch.flatten(): #this could also be done with np.amax after flattening
         if val > max:
             max = val
     return val
